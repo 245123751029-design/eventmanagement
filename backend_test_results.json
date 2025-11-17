@@ -1,0 +1,52 @@
+{
+  "timestamp": "2025-11-17T14:27:56.287320",
+  "summary": {
+    "total_tests": 7,
+    "passed_tests": 4,
+    "success_rate": 57.14285714285714
+  },
+  "test_details": [
+    {
+      "test": "Health Check",
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2025-11-17T14:27:56.005369"
+    },
+    {
+      "test": "GET /auth/me (authenticated)",
+      "success": false,
+      "details": "{'detail': 'Not authenticated'}",
+      "timestamp": "2025-11-17T14:27:56.053650"
+    },
+    {
+      "test": "GET /auth/me (unauthenticated)",
+      "success": true,
+      "details": "Correctly rejected",
+      "timestamp": "2025-11-17T14:27:56.092846"
+    },
+    {
+      "test": "GET /categories",
+      "success": true,
+      "details": "Found 8 categories",
+      "timestamp": "2025-11-17T14:27:56.131367"
+    },
+    {
+      "test": "GET /events (public)",
+      "success": true,
+      "details": "Found 0 events",
+      "timestamp": "2025-11-17T14:27:56.173517"
+    },
+    {
+      "test": "GET /events/my-events/list",
+      "success": false,
+      "details": "{'detail': 'Not authenticated'}",
+      "timestamp": "2025-11-17T14:27:56.246842"
+    },
+    {
+      "test": "POST /events",
+      "success": false,
+      "details": "{'detail': 'Not authenticated'}",
+      "timestamp": "2025-11-17T14:27:56.287293"
+    }
+  ]
+}
