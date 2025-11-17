@@ -514,27 +514,29 @@ class EventAppRoleTester:
         else:
             self.log_test(f"GET /events/{event_id}", False, str(data))
 
-    def run_all_tests(self):
-        """Run complete test suite"""
-        print("🚀 Starting Event Management App Backend Tests")
+    def run_role_system_tests(self):
+        """Run role system focused test suite"""
+        print("🚀 Starting Event Management App Role System Tests")
         print(f"🌐 Testing API: {self.api_url}")
         
-        # Setup
-        if not self.setup_test_user():
+        # Setup - Clear database and create test users
+        if not self.clear_database():
+            print("❌ Cannot proceed without database clear")
+            return False
+            
+        if not self.setup_role_test_users():
             print("❌ Cannot proceed without test user setup")
             return False
         
-        # Run tests
+        # Run role-focused tests
         self.test_health_check()
-        self.test_auth_endpoints()
-        categories = self.test_categories()
-        event_id = self.test_events(categories)
-        ticket_types = self.test_ticket_types(event_id)
-        self.test_bookings(event_id, ticket_types)
-        self.test_event_details(event_id)
+        self.test_user_role_assignment()
+        organizer_event_id, admin_event_id = self.test_role_based_access_control()
+        self.test_event_ownership_control(organizer_event_id, admin_event_id)
+        self.test_admin_endpoints()
         
         # Summary
-        print(f"\n📊 Test Results: {self.tests_passed}/{self.tests_run} passed")
+        print(f"\n📊 Role System Test Results: {self.tests_passed}/{self.tests_run} passed")
         success_rate = (self.tests_passed / self.tests_run * 100) if self.tests_run > 0 else 0
         print(f"📈 Success Rate: {success_rate:.1f}%")
         
