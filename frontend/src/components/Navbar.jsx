@@ -28,14 +28,16 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             {user ? (
               <>
-                <Button
-                  data-testid="create-event-nav-btn"
-                  onClick={() => navigate('/create-event')}
-                  className="hidden sm:flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>Create Event</span>
-                </Button>
+                {(user.role === 'organizer' || user.role === 'admin') && (
+                  <Button
+                    data-testid="create-event-nav-btn"
+                    onClick={() => navigate('/create-event')}
+                    className="hidden sm:flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Create Event</span>
+                  </Button>
+                )}
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
