@@ -108,7 +108,7 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, checkAuth }}>
+    <AuthContext.Provider value={{ user, login, logout, checkAuth, selectRole }}>
       <div className="App">
         <BrowserRouter>
           <Navbar />
