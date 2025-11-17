@@ -207,18 +207,25 @@ async def create_session(request: Request, response: Response):
     existing_user = await db.users.find_one({"email": user_data["email"]}, {"_id": 0})
     
     if not existing_user:
+        # Check if this is the first user (make them admin)
+        user_count = await db.users.count_documents({})
+        default_role = "admin" if user_count == 0 else "attendee"
+        
         # Create new user
         user = User(
             email=user_data["email"],
             name=user_data["name"],
-            picture=user_data.get("picture")
+            picture=user_data.get("picture"),
+            role=default_role
         )
         user_dict = user.model_dump()
         user_dict['created_at'] = user_dict['created_at'].isoformat()
         await db.users.insert_one(user_dict)
         user_id = user.id
+        is_new_user = True
     else:
         user_id = existing_user["id"]
+        is_new_user = False
     
     # Create session
     session_token = user_data["session_token"]
