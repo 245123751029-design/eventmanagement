@@ -37,7 +37,7 @@ function App() {
 
   const handleSessionId = async (sessionId) => {
     try {
-      await axios.post(`${API}/auth/session`, null, {
+      const response = await axios.post(`${API}/auth/session`, null, {
         headers: { 'X-Session-ID': sessionId },
         withCredentials: true
       });
@@ -47,6 +47,11 @@ function App() {
       
       // Get user data
       await checkAuth();
+      
+      // Show role selection for new users
+      if (response.data.is_new_user) {
+        setShowRoleSelection(true);
+      }
     } catch (error) {
       console.error('Session creation failed:', error);
       toast.error('Authentication failed');
