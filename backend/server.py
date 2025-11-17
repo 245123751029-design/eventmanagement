@@ -150,6 +150,17 @@ class CheckoutRequest(BaseModel):
     booking_id: str
     origin_url: str
 
+class RoleUpdateRequest(BaseModel):
+    role: str
+
+class UserWithRole(BaseModel):
+    id: str
+    email: str
+    name: str
+    picture: Optional[str] = None
+    role: str
+    created_at: str
+
 # ============ AUTH HELPERS ============
 
 async def get_current_user(request: Request, authorization: Optional[str] = Header(None)) -> Optional[User]:
