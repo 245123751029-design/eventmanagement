@@ -185,7 +185,7 @@ const CreateEvent = () => {
 
                   <div>
                     <Label htmlFor="category">Category *</Label>
-                    <Select value={formData.category} onValueChange={handleCategoryChange}>
+                    <Select value={formData.category || undefined} onValueChange={handleCategoryChange}>
                       <SelectTrigger data-testid="event-category-select">
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
