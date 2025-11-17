@@ -118,6 +118,10 @@ class EventAppRoleTester:
         # First user should automatically become admin regardless of specified role
         actual_role = "admin" if is_first_user else role
         
+        # Create datetime strings in ISO format as expected by the backend
+        now = datetime.now(timezone.utc)
+        expires_at = now + timedelta(days=7)
+        
         mongo_commands = f"""
         use test_database;
         db.users.insertOne({{
@@ -126,13 +130,13 @@ class EventAppRoleTester:
             name: "Test {role.title()} User",
             picture: "https://via.placeholder.com/150",
             role: "{actual_role}",
-            created_at: new Date()
+            created_at: "{now.isoformat()}"
         }});
         db.user_sessions.insertOne({{
             user_id: "{user_id}",
             session_token: "{session_token}",
-            expires_at: new Date(Date.now() + 7*24*60*60*1000),
-            created_at: new Date()
+            expires_at: "{expires_at.isoformat()}",
+            created_at: "{now.isoformat()}"
         }});
         """
         
