@@ -89,12 +89,12 @@ const Home = () => {
                 className="pl-10 h-12 rounded-full border-gray-300"
               />
             </div>
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <Select value={selectedCategory || undefined} onValueChange={setSelectedCategory}>
               <SelectTrigger data-testid="category-filter-select" className="h-12 rounded-full">
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Categories</SelectItem>
+                <SelectItem value="all">All Categories</SelectItem>
                 {categories.map((cat) => (
                   <SelectItem key={cat.id} value={cat.name}>{cat.name}</SelectItem>
                 ))}
