@@ -543,12 +543,13 @@ class EventAppRoleTester:
         return success_rate >= 80
 
 def main():
-    tester = EventAppTester()
-    success = tester.run_all_tests()
+    tester = EventAppRoleTester()
+    success = tester.run_role_system_tests()
     
     # Save detailed results
     results = {
         "timestamp": datetime.now().isoformat(),
+        "test_type": "role_system_tests",
         "summary": {
             "total_tests": tester.tests_run,
             "passed_tests": tester.tests_passed,
@@ -557,7 +558,7 @@ def main():
         "test_details": tester.test_results
     }
     
-    with open('/app/backend_test_results.json', 'w') as f:
+    with open('/app/role_system_test_results.json', 'w') as f:
         json.dump(results, f, indent=2)
     
     return 0 if success else 1
