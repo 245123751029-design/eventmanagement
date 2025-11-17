@@ -81,21 +81,13 @@ class EventAppRoleTester:
         """Clear database to test first-user-as-admin logic"""
         print("\n🗑️ Clearing database for role testing...")
         
-        mongo_commands = """
-        use test_database;
-        db.users.deleteMany({});
-        db.user_sessions.deleteMany({});
-        db.events.deleteMany({});
-        db.bookings.deleteMany({});
-        db.ticket_types.deleteMany({});
-        """
-        
         try:
             import subprocess
-            result = subprocess.run(
-                ['mongosh', '--eval', mongo_commands],
-                capture_output=True, text=True, timeout=30
-            )
+            
+            # Clear all collections
+            clear_cmd = """mongosh test_database --eval "db.users.deleteMany({}); db.user_sessions.deleteMany({}); db.events.deleteMany({}); db.bookings.deleteMany({}); db.ticket_types.deleteMany({});" """
+            
+            result = subprocess.run(clear_cmd, shell=True, capture_output=True, text=True, timeout=30)
             
             if result.returncode == 0:
                 print("✅ Database cleared successfully")
