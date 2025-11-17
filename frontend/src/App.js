@@ -87,6 +87,18 @@ function App() {
     }
   };
 
+  const selectRole = async (role) => {
+    try {
+      await axios.patch(`${API}/auth/select-role`, { role }, { withCredentials: true });
+      setShowRoleSelection(false);
+      await checkAuth();
+      toast.success(`Role set to ${role}`);
+    } catch (error) {
+      console.error('Role selection failed:', error);
+      toast.error('Failed to set role');
+    }
+  };
+
   if (loading) {
     return (
       <div className="loading-screen">
