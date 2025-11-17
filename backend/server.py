@@ -413,12 +413,13 @@ async def update_event(event_id: str, update_data: EventUpdate, user: User = Dep
 
 @api_router.delete("/events/{event_id}")
 async def delete_event(event_id: str, user: User = Depends(require_auth)):
-    """Delete event (owner only)"""
+    """Delete event (owner or admin)"""
     event = await db.events.find_one({"id": event_id}, {"_id": 0})
     if not event:
         raise HTTPException(status_code=404, detail="Event not found")
     
-    if event["creator_id"] != user.id:
+    # Allow owner or admin to delete
+    if event["creator_id"] != user.id and user.role != "admin":
         raise HTTPException(status_code=403, detail="Not authorized")
     
     await db.events.update_one({"id": event_id}, {"$set": {"status": "cancelled"}})
