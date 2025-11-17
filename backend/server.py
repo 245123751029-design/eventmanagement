@@ -294,6 +294,24 @@ async def logout(request: Request, response: Response):
     response.delete_cookie("session_token", path="/")
     return {"success": True}
 
+@api_router.patch("/auth/select-role")
+async def select_role(role_data: RoleUpdateRequest, user: User = Depends(require_auth)):
+    """Allow user to select their role (attendee or organizer) during signup"""
+    if role_data.role not in ["attendee", "organizer"]:
+        raise HTTPException(status_code=400, detail="Invalid role. Must be 'attendee' or 'organizer'")
+    
+    # Don't allow changing from admin
+    if user.role == "admin":
+        raise HTTPException(status_code=403, detail="Cannot change admin role")
+    
+    # Update user role
+    await db.users.update_one(
+        {"id": user.id},
+        {"$set": {"role": role_data.role}}
+    )
+    
+    return {"success": True, "role": role_data.role}
+
 # ============ CATEGORY ROUTES ============
 
 @api_router.get("/categories", response_model=List[Category])
