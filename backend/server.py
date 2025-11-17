@@ -688,6 +688,144 @@ async def get_booking_qr(booking_id: str, user: User = Depends(require_auth)):
     
     return StreamingResponse(buf, media_type="image/png")
 
+# ============ ADMIN ROUTES ============
+
+@api_router.get("/admin/stats")
+async def get_admin_stats(user: User = Depends(require_admin)):
+    """Get admin dashboard statistics"""
+    total_users = await db.users.count_documents({})
+    total_events = await db.events.count_documents({})
+    active_events = await db.events.count_documents({"status": "active"})
+    total_bookings = await db.bookings.count_documents({})
+    confirmed_bookings = await db.bookings.count_documents({"status": "confirmed"})
+    
+    # Calculate total revenue from confirmed bookings
+    bookings = await db.bookings.find({"status": "confirmed"}, {"_id": 0, "total_price": 1}).to_list(10000)
+    total_revenue = sum(b.get("total_price", 0) for b in bookings)
+    
+    # Get role distribution
+    attendees = await db.users.count_documents({"role": "attendee"})
+    organizers = await db.users.count_documents({"role": "organizer"})
+    admins = await db.users.count_documents({"role": "admin"})
+    
+    return {
+        "total_users": total_users,
+        "total_events": total_events,
+        "active_events": active_events,
+        "total_bookings": total_bookings,
+        "confirmed_bookings": confirmed_bookings,
+        "total_revenue": total_revenue,
+        "role_distribution": {
+            "attendees": attendees,
+            "organizers": organizers,
+            "admins": admins
+        }
+    }
+
+@api_router.get("/admin/users", response_model=List[UserWithRole])
+async def get_all_users(
+    user: User = Depends(require_admin),
+    role: Optional[str] = None,
+    limit: int = 100,
+    skip: int = 0
+):
+    """Get all users with optional role filter"""
+    query = {}
+    if role:
+        query["role"] = role
+    
+    users = await db.users.find(query, {"_id": 0}).skip(skip).limit(limit).to_list(limit)
+    result = []
+    for u in users:
+        if isinstance(u.get('created_at'), datetime):
+            u['created_at'] = u['created_at'].isoformat()
+        result.append(UserWithRole(**u))
+    return result
+
+@api_router.patch("/admin/users/{user_id}/role")
+async def update_user_role(
+    user_id: str,
+    role_data: RoleUpdateRequest,
+    admin: User = Depends(require_admin)
+):
+    """Update user role (admin only)"""
+    if role_data.role not in ["attendee", "organizer", "admin"]:
+        raise HTTPException(status_code=400, detail="Invalid role")
+    
+    # Don't allow user to change their own role
+    if user_id == admin.id:
+        raise HTTPException(status_code=403, detail="Cannot change your own role")
+    
+    target_user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not target_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    await db.users.update_one(
+        {"id": user_id},
+        {"$set": {"role": role_data.role}}
+    )
+    
+    return {"success": True, "user_id": user_id, "new_role": role_data.role}
+
+@api_router.get("/admin/events", response_model=List[EventWithCreator])
+async def get_all_events_admin(
+    user: User = Depends(require_admin),
+    status: Optional[str] = None,
+    limit: int = 100,
+    skip: int = 0
+):
+    """Get all events for admin"""
+    query = {}
+    if status:
+        query["status"] = status
+    
+    events = await db.events.find(query, {"_id": 0}).skip(skip).limit(limit).to_list(limit)
+    
+    result = []
+    for event in events:
+        creator = await db.users.find_one({"id": event["creator_id"]}, {"_id": 0})
+        event_with_creator = EventWithCreator(
+            **event,
+            creator_name=creator.get("name", "Unknown") if creator else "Unknown",
+            creator_email=creator.get("email", "") if creator else ""
+        )
+        result.append(event_with_creator)
+    
+    return result
+
+@api_router.get("/admin/bookings", response_model=List[BookingWithDetails])
+async def get_all_bookings_admin(
+    user: User = Depends(require_admin),
+    status: Optional[str] = None,
+    limit: int = 100,
+    skip: int = 0
+):
+    """Get all bookings for admin"""
+    query = {}
+    if status:
+        query["status"] = status
+    
+    bookings = await db.bookings.find(query, {"_id": 0}).skip(skip).limit(limit).to_list(limit)
+    
+    result = []
+    for booking in bookings:
+        event = await db.events.find_one({"id": booking["event_id"]}, {"_id": 0})
+        ticket_type = await db.ticket_types.find_one({"id": booking["ticket_type_id"]}, {"_id": 0})
+        
+        if isinstance(booking.get('created_at'), datetime):
+            booking['created_at'] = booking['created_at'].isoformat()
+        
+        booking_with_details = BookingWithDetails(
+            **booking,
+            event_title=event.get("title", "Unknown") if event else "Unknown",
+            event_date=event.get("date", "") if event else "",
+            event_location=event.get("location", "") if event else "",
+            ticket_type_name=ticket_type.get("name", "Unknown") if ticket_type else "Unknown"
+        )
+        result.append(booking_with_details)
+    
+    return result
+
 # Include the router in the main app
 app.include_router(api_router)
 
