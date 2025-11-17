@@ -122,37 +122,30 @@ class EventAppRoleTester:
         now = datetime.now(timezone.utc)
         expires_at = now + timedelta(days=7)
         
-        mongo_commands = f"""
-        use test_database;
-        db.users.insertOne({{
-            id: "{user_id}",
-            email: "{email}",
-            name: "Test {role.title()} User",
-            picture: "https://via.placeholder.com/150",
-            role: "{actual_role}",
-            created_at: "{now.isoformat()}"
-        }});
-        db.user_sessions.insertOne({{
-            user_id: "{user_id}",
-            session_token: "{session_token}",
-            expires_at: "{expires_at.isoformat()}",
-            created_at: "{now.isoformat()}"
-        }});
-        """
-        
+        # Use direct mongosh command execution
         try:
             import subprocess
-            result = subprocess.run(
-                ['mongosh', '--eval', mongo_commands],
-                capture_output=True, text=True, timeout=30
-            )
             
-            if result.returncode == 0:
-                print(f"✅ {role.title()} user created: {email} (actual role: {actual_role})")
-                return user_id, session_token
-            else:
-                print(f"❌ {role.title()} user creation failed: {result.stderr}")
+            # Create user
+            user_cmd = f"""mongosh test_database --eval "db.users.insertOne({{id: '{user_id}', email: '{email}', name: 'Test {role.title()} User', picture: 'https://via.placeholder.com/150', role: '{actual_role}', created_at: '{now.isoformat()}'}})" """
+            
+            user_result = subprocess.run(user_cmd, shell=True, capture_output=True, text=True, timeout=30)
+            
+            if user_result.returncode != 0:
+                print(f"❌ {role.title()} user creation failed: {user_result.stderr}")
                 return None, None
+            
+            # Create session
+            session_cmd = f"""mongosh test_database --eval "db.user_sessions.insertOne({{user_id: '{user_id}', session_token: '{session_token}', expires_at: '{expires_at.isoformat()}', created_at: '{now.isoformat()}'}})" """
+            
+            session_result = subprocess.run(session_cmd, shell=True, capture_output=True, text=True, timeout=30)
+            
+            if session_result.returncode != 0:
+                print(f"❌ {role.title()} session creation failed: {session_result.stderr}")
+                return None, None
+            
+            print(f"✅ {role.title()} user created: {email} (actual role: {actual_role})")
+            return user_id, session_token
                 
         except Exception as e:
             print(f"❌ {role.title()} user creation error: {str(e)}")
