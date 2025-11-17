@@ -110,6 +110,37 @@ function App() {
   return (
     <AuthContext.Provider value={{ user, login, logout, checkAuth, selectRole }}>
       <div className="App">
+        {/* Role Selection Modal */}
+        {showRoleSelection && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+              <h2 className="text-2xl font-bold mb-4">Choose Your Role</h2>
+              <p className="text-gray-600 mb-6">
+                Select how you'd like to use our platform. You can change this later.
+              </p>
+              <div className="space-y-3">
+                <button
+                  onClick={() => selectRole('attendee')}
+                  className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition text-left"
+                >
+                  <div className="font-semibold text-lg">🎫 Attendee</div>
+                  <div className="text-sm text-gray-600 mt-1">
+                    Browse and book tickets for events
+                  </div>
+                </button>
+                <button
+                  onClick={() => selectRole('organizer')}
+                  className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition text-left"
+                >
+                  <div className="font-semibold text-lg">🎪 Organizer</div>
+                  <div className="text-sm text-gray-600 mt-1">
+                    Create and manage events, plus book tickets
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <BrowserRouter>
           <Navbar />
           <Routes>
