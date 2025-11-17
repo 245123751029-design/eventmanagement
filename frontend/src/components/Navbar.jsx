@@ -52,8 +52,26 @@ const Navbar = () => {
                     <div className="px-2 py-2">
                       <p className="text-sm font-semibold">{user.name}</p>
                       <p className="text-xs text-gray-500">{user.email}</p>
+                      <div className="mt-1">
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${
+                          user.role === 'admin' ? 'bg-red-100 text-red-700' :
+                          user.role === 'organizer' ? 'bg-purple-100 text-purple-700' :
+                          'bg-blue-100 text-blue-700'
+                        }`}>
+                          {user.role === 'admin' ? '👑 Admin' : user.role === 'organizer' ? '🎪 Organizer' : '🎫 Attendee'}
+                        </span>
+                      </div>
                     </div>
                     <DropdownMenuSeparator />
+                    {user.role === 'admin' && (
+                      <>
+                        <DropdownMenuItem onClick={() => navigate('/admin')} className="cursor-pointer text-purple-600">
+                          <Shield className="w-4 h-4 mr-2" />
+                          Admin Dashboard
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                      </>
+                    )}
                     <DropdownMenuItem data-testid="my-events-menu-item" onClick={() => navigate('/my-events')} className="cursor-pointer">
                       <Calendar className="w-4 h-4 mr-2" />
                       My Events
@@ -62,10 +80,12 @@ const Navbar = () => {
                       <Ticket className="w-4 h-4 mr-2" />
                       My Bookings
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="sm:hidden cursor-pointer" onClick={() => navigate('/create-event')}>
-                      <Plus className="w-4 h-4 mr-2" />
-                      Create Event
-                    </DropdownMenuItem>
+                    {(user.role === 'organizer' || user.role === 'admin') && (
+                      <DropdownMenuItem className="sm:hidden cursor-pointer" onClick={() => navigate('/create-event')}>
+                        <Plus className="w-4 h-4 mr-2" />
+                        Create Event
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem data-testid="logout-btn" onClick={logout} className="cursor-pointer text-red-600">
                       <LogOut className="w-4 h-4 mr-2" />
