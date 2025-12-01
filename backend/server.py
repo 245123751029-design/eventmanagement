@@ -162,6 +162,16 @@ class UserWithRole(BaseModel):
     role: str
     created_at: str
 
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+    name: str
+    role: str = "attendee"
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
 # ============ AUTH HELPERS ============
 
 async def get_current_user(request: Request, authorization: Optional[str] = Header(None)) -> Optional[User]:
