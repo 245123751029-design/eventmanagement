@@ -46,9 +46,9 @@ const Welcome = () => {
             Discover amazing events, connect with communities, and create unforgettable memories. Your next great experience is just a click away!
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <Button 
-              onClick={login}
+              onClick={() => navigate('/signup')}
               size="lg"
               className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-6 text-lg rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 flex items-center space-x-2"
             >
@@ -57,12 +57,23 @@ const Welcome = () => {
             </Button>
             
             <Button 
-              onClick={() => navigate('/events')}
+              onClick={() => navigate('/login')}
               size="lg"
               variant="outline"
               className="bg-white/10 backdrop-blur-lg border-2 border-white/30 text-white hover:bg-white/20 px-8 py-6 text-lg rounded-full shadow-xl transition-all duration-300"
             >
-              Browse Events
+              Sign In
+            </Button>
+          </div>
+          
+          <div className="mb-16">
+            <Button 
+              onClick={login}
+              size="sm"
+              variant="ghost"
+              className="text-white/90 hover:text-white hover:bg-white/10"
+            >
+              Or continue with Google OAuth →
             </Button>
           </div>
           
