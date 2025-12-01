@@ -381,8 +381,8 @@ const AdminDashboard = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {booking.quantity}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          ${booking.total_price.toFixed(2)}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                          ₹{booking.total_price.toFixed(2)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
