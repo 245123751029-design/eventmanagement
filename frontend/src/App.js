@@ -11,6 +11,7 @@ import Welcome from '@/pages/Welcome';
 import Home from '@/pages/Home';
 import EventDetails from '@/pages/EventDetails';
 import CreateEvent from '@/pages/CreateEvent';
+import EditEvent from '@/pages/EditEvent';
 import MyEvents from '@/pages/MyEvents';
 import MyBookings from '@/pages/MyBookings';
 import BookingSuccess from '@/pages/BookingSuccess';
