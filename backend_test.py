@@ -12,7 +12,7 @@ from datetime import datetime, timezone, timedelta
 from typing import Dict, Any, Optional
 
 class EventAppRoleTester:
-    def __init__(self, base_url="https://events-enhanced.preview.emergentagent.com"):
+    def __init__(self, base_url="https://event-manager-plus.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.admin_token = None
