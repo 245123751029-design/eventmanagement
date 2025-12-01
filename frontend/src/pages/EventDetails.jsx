@@ -270,31 +270,31 @@ const EventDetails = () => {
 
       {/* Booking Dialog */}
       <Dialog open={showBookingDialog} onOpenChange={setShowBookingDialog}>
-        <DialogContent data-testid="booking-dialog" className="max-w-md">
+        <DialogContent data-testid="booking-dialog" className="max-w-md bg-white dark:bg-gray-800">
           <DialogHeader>
-            <DialogTitle>Book Tickets</DialogTitle>
-            <DialogDescription>Select ticket type and quantity</DialogDescription>
+            <DialogTitle className="text-gray-900 dark:text-white">Book Tickets</DialogTitle>
+            <DialogDescription className="text-gray-600 dark:text-gray-300">Select ticket type and quantity</DialogDescription>
           </DialogHeader>
           <div className="space-y-4 mt-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Ticket Type</label>
+              <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">Ticket Type</label>
               <Select value={selectedTicketType || undefined} onValueChange={setSelectedTicketType}>
-                <SelectTrigger data-testid="ticket-type-select">
+                <SelectTrigger data-testid="ticket-type-select" className="dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                   <SelectValue placeholder="Select ticket type" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="dark:bg-gray-700 dark:border-gray-600">
                   {ticketTypes
                     .filter(t => getAvailableTickets(t) > 0)
                     .map((ticket) => (
-                      <SelectItem key={ticket.id} value={ticket.id}>
-                        {ticket.name} - {ticket.price === 0 ? 'FREE' : `$${ticket.price.toFixed(2)}`}
+                      <SelectItem key={ticket.id} value={ticket.id} className="dark:text-white">
+                        {ticket.name} - {ticket.price === 0 ? 'FREE' : `₹${ticket.price.toFixed(2)}`}
                       </SelectItem>
                     ))}
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Quantity</label>
+              <label className="block text-sm font-medium mb-2 text-gray-900 dark:text-white">Quantity</label>
               <Input
                 data-testid="quantity-input"
                 type="number"
@@ -302,22 +302,23 @@ const EventDetails = () => {
                 max={selectedTicket ? getAvailableTickets(selectedTicket) : 1}
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
+                className="dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               />
             </div>
             {selectedTicket && (
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <div className="flex justify-between text-sm mb-1">
+              <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div className="flex justify-between text-sm mb-1 text-gray-900 dark:text-gray-100">
                   <span>Ticket Price:</span>
-                  <span className="font-semibold">${selectedTicket.price.toFixed(2)}</span>
+                  <span className="font-semibold">₹{selectedTicket.price.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-sm mb-2">
+                <div className="flex justify-between text-sm mb-2 text-gray-900 dark:text-gray-100">
                   <span>Quantity:</span>
                   <span className="font-semibold">{quantity}</span>
                 </div>
-                <div className="border-t border-gray-300 pt-2 mt-2">
-                  <div className="flex justify-between text-lg font-bold">
+                <div className="border-t border-gray-300 dark:border-gray-600 pt-2 mt-2">
+                  <div className="flex justify-between text-lg font-bold text-gray-900 dark:text-gray-100">
                     <span>Total:</span>
-                    <span className="text-blue-600">${totalPrice.toFixed(2)}</span>
+                    <span className="text-blue-600 dark:text-blue-400">₹{totalPrice.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
