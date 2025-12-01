@@ -166,23 +166,23 @@ const MyBookings = () => {
           setQrCodeUrl(null);
         }
       }}>
-        <DialogContent data-testid="qr-code-dialog" className="max-w-md">
+        <DialogContent data-testid="qr-code-dialog" className="max-w-md dark:bg-gray-800 dark:border-gray-700">
           <DialogHeader>
-            <DialogTitle>Ticket QR Code</DialogTitle>
+            <DialogTitle className="text-gray-900 dark:text-white">Ticket QR Code</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             {selectedBooking && (
               <>
                 <div className="text-center">
-                  <h3 className="font-bold text-lg mb-1">{selectedBooking.event_title}</h3>
-                  <p className="text-sm text-gray-600">{selectedBooking.ticket_type_name} × {selectedBooking.quantity}</p>
+                  <h3 className="font-bold text-lg mb-1 text-gray-900 dark:text-white">{selectedBooking.event_title}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">{selectedBooking.ticket_type_name} × {selectedBooking.quantity}</p>
                 </div>
                 {qrCodeUrl && (
-                  <div className="flex justify-center p-6 bg-white">
+                  <div className="flex justify-center p-6 bg-white dark:bg-gray-700">
                     <img src={qrCodeUrl} alt="Ticket QR Code" className="w-64 h-64" />
                   </div>
                 )}
-                <p className="text-xs text-center text-gray-500">
+                <p className="text-xs text-center text-gray-500 dark:text-gray-400">
                   Show this QR code at the event entrance
                 </p>
               </>
