@@ -136,9 +136,9 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="p-5">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">{event.title}</h3>
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">{event.description}</p>
-                  <div className="space-y-2 text-sm text-gray-600">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">{event.title}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">{event.description}</p>
+                  <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                     <div className="flex items-center space-x-2">
                       <Calendar className="w-4 h-4 text-blue-600" />
                       <span>{formatDate(event.date)}</span>
