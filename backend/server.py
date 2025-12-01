@@ -14,6 +14,7 @@ import qrcode
 from io import BytesIO
 import requests
 import stripe
+import bcrypt
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
