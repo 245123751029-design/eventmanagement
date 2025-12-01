@@ -170,11 +170,24 @@ const Home = () => {
                   {event.image_url ? (
                     <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Calendar className="w-16 h-16 text-white opacity-50" />
+                    <div 
+                      className="w-full h-full bg-cover bg-center"
+                      style={{
+                        backgroundImage: `url(${
+                          event.category === 'Concert' ? 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3' :
+                          event.category === 'Workshop' ? 'https://images.unsplash.com/photo-1761959172946-d5a39aed82cb' :
+                          event.category === 'Conference' ? 'https://images.pexels.com/photos/34991748/pexels-photo-34991748.jpeg' :
+                          event.category === 'Festival' ? 'https://images.unsplash.com/photo-1531686264889-56fdcabd163f' :
+                          'https://images.unsplash.com/photo-1459749411175-04bf5292ceea'
+                        }?crop=entropy&cs=srgb&fm=jpg&q=85)`
+                      }}
+                    >
+                      <div className="w-full h-full bg-gradient-to-br from-blue-600/40 to-purple-600/40 flex items-center justify-center">
+                        <Calendar className="w-16 h-16 text-white opacity-70" />
+                      </div>
                     </div>
                   )}
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-700">
+                  <div className="absolute top-3 right-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-200">
                     {event.category}
                   </div>
                 </div>
