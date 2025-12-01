@@ -355,6 +355,80 @@ frontend:
         agent: "main"
         comment: "Added /admin route with role-based protection, only accessible to admin users"
 
+
+  - task: "Login page with email/password"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/Login.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Created Login.jsx page with email/password form, OAuth button, dark mode support, and link to signup page"
+
+  - task: "Signup page with registration"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/Signup.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Created Signup.jsx page with registration form (name, email, password, role selection), OAuth button, dark mode support, and link to login page"
+
+  - task: "Login/Signup routes in App.js"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added /login and /signup routes to App.js with redirect to /events for authenticated users. Added setUser to AuthContext."
+
+  - task: "Enhanced Welcome page with login/signup buttons"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/Welcome.jsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Updated Welcome page with 'Get Started' (signup) and 'Sign In' (login) buttons. OAuth moved to secondary option."
+
+  - task: "Enhanced Home page with images and gradient"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/Home.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Enhanced Home page with hero background image + gradient overlay, category quick links (Concerts, Workshops, Conferences, Sports), and category-based fallback images for event cards. Dark mode compatible."
+
+  - task: "Currency fix - AdminDashboard"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/AdminDashboard.jsx"
+    stuck_count: 0
+    priority: "low"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Changed $ to ₹ in AdminDashboard bookings table (line 385) and added dark mode text color"
+
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
