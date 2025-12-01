@@ -66,11 +66,54 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-700 dark:to-purple-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">Discover Amazing Events</h1>
-          <p className="text-lg sm:text-xl text-blue-100 dark:text-blue-200 max-w-2xl">Find and book tickets for concerts, workshops, conferences, and more</p>
+      {/* Hero Section with Background Image */}
+      <div 
+        className="relative py-20 overflow-hidden"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1459749411175-04bf5292ceea?crop=entropy&cs=srgb&fm=jpg&q=85)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-purple-600/85 to-pink-600/90 dark:from-blue-900/95 dark:via-purple-900/90 dark:to-pink-900/95"></div>
+        
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-white text-center lg:text-left">
+            Discover Amazing Events
+          </h1>
+          <p className="text-lg sm:text-xl text-blue-100 dark:text-blue-200 max-w-2xl text-center lg:text-left">
+            Find and book tickets for concerts, workshops, conferences, and more
+          </p>
+          
+          {/* Category Quick Links */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 max-w-4xl">
+            <div className="group cursor-pointer">
+              <div className="bg-white/20 dark:bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/30 hover:bg-white/30 transition-all duration-300 h-full">
+                <div className="text-3xl mb-2 text-center">🎵</div>
+                <div className="text-white font-semibold text-center text-sm">Concerts</div>
+              </div>
+            </div>
+            <div className="group cursor-pointer">
+              <div className="bg-white/20 dark:bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/30 hover:bg-white/30 transition-all duration-300 h-full">
+                <div className="text-3xl mb-2 text-center">🎓</div>
+                <div className="text-white font-semibold text-center text-sm">Workshops</div>
+              </div>
+            </div>
+            <div className="group cursor-pointer">
+              <div className="bg-white/20 dark:bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/30 hover:bg-white/30 transition-all duration-300 h-full">
+                <div className="text-3xl mb-2 text-center">💼</div>
+                <div className="text-white font-semibold text-center text-sm">Conferences</div>
+              </div>
+            </div>
+            <div className="group cursor-pointer">
+              <div className="bg-white/20 dark:bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/30 hover:bg-white/30 transition-all duration-300 h-full">
+                <div className="text-3xl mb-2 text-center">⚽</div>
+                <div className="text-white font-semibold text-center text-sm">Sports</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
