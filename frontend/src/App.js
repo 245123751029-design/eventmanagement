@@ -115,7 +115,7 @@ function App() {
 
   return (
     <ThemeProvider>
-      <AuthContext.Provider value={{ user, login, logout, checkAuth, selectRole }}>
+      <AuthContext.Provider value={{ user, setUser, login, logout, checkAuth, selectRole }}>
         <div className="App bg-white dark:bg-gray-900 min-h-screen transition-colors duration-200">
           {/* Role Selection Modal */}
           {showRoleSelection && (
@@ -152,6 +152,8 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={user ? <Navigate to="/events" /> : <Welcome />} />
+              <Route path="/login" element={user ? <Navigate to="/events" /> : <Login />} />
+              <Route path="/signup" element={user ? <Navigate to="/events" /> : <Signup />} />
               <Route path="/events" element={<Home />} />
               <Route path="/events/:id" element={<EventDetails />} />
               <Route path="/create-event" element={user && (user.role === 'organizer' || user.role === 'admin') ? <CreateEvent /> : <Navigate to="/events" />} />
