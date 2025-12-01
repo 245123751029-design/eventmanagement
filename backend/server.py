@@ -327,6 +327,118 @@ async def select_role(role_data: RoleUpdateRequest, user: User = Depends(require
     
     return {"success": True, "role": role_data.role}
 
+@api_router.post("/auth/register")
+async def register(request: RegisterRequest, response: Response):
+    """Register a new user with email and password"""
+    # Check if user already exists
+    existing_user = await db.users.find_one({"email": request.email}, {"_id": 0})
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    # Validate role
+    if request.role not in ["attendee", "organizer"]:
+        raise HTTPException(status_code=400, detail="Invalid role. Must be 'attendee' or 'organizer'")
+    
+    # Check if this is the first user (make them admin)
+    user_count = await db.users.count_documents({})
+    default_role = "admin" if user_count == 0 else request.role
+    
+    # Hash password
+    password_hash = bcrypt.hashpw(request.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    
+    # Create new user
+    user = User(
+        email=request.email,
+        name=request.name,
+        password_hash=password_hash,
+        role=default_role
+    )
+    
+    user_dict = user.model_dump()
+    user_dict['created_at'] = user_dict['created_at'].isoformat()
+    await db.users.insert_one(user_dict)
+    
+    # Create session
+    session_token = str(uuid.uuid4())
+    expires_at = datetime.now(timezone.utc) + timedelta(days=7)
+    
+    session = UserSession(
+        user_id=user.id,
+        session_token=session_token,
+        expires_at=expires_at
+    )
+    
+    session_dict = session.model_dump()
+    session_dict['expires_at'] = session_dict['expires_at'].isoformat()
+    session_dict['created_at'] = session_dict['created_at'].isoformat()
+    
+    await db.user_sessions.insert_one(session_dict)
+    
+    # Set cookie
+    response.set_cookie(
+        key="session_token",
+        value=session_token,
+        httponly=True,
+        secure=True,
+        samesite="none",
+        path="/",
+        max_age=7*24*60*60
+    )
+    
+    # Return user without password_hash
+    user_response = user.model_dump(exclude={'password_hash'})
+    user_response['created_at'] = user_response['created_at'].isoformat()
+    
+    return {"success": True, "user": user_response}
+
+@api_router.post("/auth/login")
+async def login(request: LoginRequest, response: Response):
+    """Login with email and password"""
+    # Find user
+    user_doc = await db.users.find_one({"email": request.email}, {"_id": 0})
+    if not user_doc:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    
+    # Check if user has password (not OAuth-only)
+    if not user_doc.get('password_hash'):
+        raise HTTPException(status_code=401, detail="This account uses OAuth login. Please use the OAuth button.")
+    
+    # Verify password
+    if not bcrypt.checkpw(request.password.encode('utf-8'), user_doc['password_hash'].encode('utf-8')):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    
+    # Create session
+    session_token = str(uuid.uuid4())
+    expires_at = datetime.now(timezone.utc) + timedelta(days=7)
+    
+    session = UserSession(
+        user_id=user_doc['id'],
+        session_token=session_token,
+        expires_at=expires_at
+    )
+    
+    session_dict = session.model_dump()
+    session_dict['expires_at'] = session_dict['expires_at'].isoformat()
+    session_dict['created_at'] = session_dict['created_at'].isoformat()
+    
+    await db.user_sessions.insert_one(session_dict)
+    
+    # Set cookie
+    response.set_cookie(
+        key="session_token",
+        value=session_token,
+        httponly=True,
+        secure=True,
+        samesite="none",
+        path="/",
+        max_age=7*24*60*60
+    )
+    
+    # Return user without password_hash
+    user_doc.pop('password_hash', None)
+    
+    return {"success": True, "user": user_doc}
+
 # ============ CATEGORY ROUTES ============
 
 @api_router.get("/categories", response_model=List[Category])
