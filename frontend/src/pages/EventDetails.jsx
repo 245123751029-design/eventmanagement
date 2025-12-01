@@ -137,20 +137,34 @@ const EventDetails = () => {
   const selectedTicket = ticketTypes.find(t => t.id === selectedTicketType);
   const totalPrice = selectedTicket ? selectedTicket.price * quantity : 0;
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Button
-          data-testid="back-to-events-btn"
-          onClick={() => navigate('/events')}
-          variant="ghost"
-          className="mb-6 hover:bg-gray-100 rounded-full"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Events
-        </Button>
+  const canEditEvent = user && (user.role === 'admin' || event.creator_id === user.id);
 
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20 py-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center mb-6">
+          <Button
+            data-testid="back-to-events-btn"
+            onClick={() => navigate('/events')}
+            variant="ghost"
+            className="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Events
+          </Button>
+          
+          {canEditEvent && (
+            <Button
+              onClick={() => navigate(`/edit-event/${event.id}`)}
+              className="bg-purple-600 hover:bg-purple-700 text-white rounded-full"
+            >
+              <Edit className="w-4 h-4 mr-2" />
+              Edit Event
+            </Button>
+          )}
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
           <div className="h-80 bg-gradient-to-br from-blue-400 to-purple-500 relative">
             {event.image_url ? (
               <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
