@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { Calendar, MapPin, Users, User, ArrowLeft, Ticket } from 'lucide-react';
+import { Calendar, MapPin, Users, User, ArrowLeft, Ticket, Edit } from 'lucide-react';
 import { toast } from 'sonner';
+import LocationMap from '@/components/LocationMap';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
