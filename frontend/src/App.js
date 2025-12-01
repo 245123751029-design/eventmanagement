@@ -153,6 +153,7 @@ function App() {
               <Route path="/events" element={<Home />} />
               <Route path="/events/:id" element={<EventDetails />} />
               <Route path="/create-event" element={user && (user.role === 'organizer' || user.role === 'admin') ? <CreateEvent /> : <Navigate to="/events" />} />
+              <Route path="/edit-event/:id" element={user ? <EditEvent /> : <Navigate to="/events" />} />
               <Route path="/my-events" element={user ? <MyEvents /> : <Navigate to="/events" />} />
               <Route path="/my-bookings" element={user ? <MyBookings /> : <Navigate to="/events" />} />
               <Route path="/booking-success" element={user ? <BookingSuccess /> : <Navigate to="/events" />} />
