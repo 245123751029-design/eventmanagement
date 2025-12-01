@@ -223,7 +223,7 @@ const EventDetails = () => {
 
             {ticketTypes.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Tickets</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Tickets</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {ticketTypes.map((ticket) => {
                     const available = getAvailableTickets(ticket);
@@ -231,15 +231,15 @@ const EventDetails = () => {
                       <div
                         key={ticket.id}
                         data-testid={`ticket-type-${ticket.id}`}
-                        className="p-5 border-2 border-gray-200 rounded-xl hover:border-blue-400 hover:shadow-md"
+                        className="p-5 border-2 border-gray-200 dark:border-gray-600 rounded-xl hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition-all"
                       >
                         <div className="flex justify-between items-start mb-2">
-                          <h3 className="font-bold text-lg text-gray-900">{ticket.name}</h3>
-                          <span className="text-xl font-bold text-blue-600">
-                            {ticket.price === 0 ? 'FREE' : `$${ticket.price.toFixed(2)}`}
+                          <h3 className="font-bold text-lg text-gray-900 dark:text-white">{ticket.name}</h3>
+                          <span className="text-xl font-bold text-blue-600 dark:text-blue-400">
+                            {ticket.price === 0 ? 'FREE' : `₹${ticket.price.toFixed(2)}`}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
                           {available > 0 ? `${available} tickets available` : 'Sold out'}
                         </p>
                       </div>
