@@ -68,5 +68,5 @@ if __name__ == "__main__":
         # Test the token
         import requests
         headers = {'Authorization': f'Bearer {token}'}
-        response = requests.get("https://ticketmaster-70.preview.emergentagent.com/api/auth/me", headers=headers)
+        response = requests.get("https://events-enhanced.preview.emergentagent.com/api/auth/me", headers=headers)
         print(f"Auth test - Status: {response.status_code}, Response: {response.text}")

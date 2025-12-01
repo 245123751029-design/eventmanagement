@@ -8,7 +8,7 @@ import json
 from datetime import datetime, timezone, timedelta
 
 def test_auth_debug():
-    base_url = "https://ticketmaster-70.preview.emergentagent.com"
+    base_url = "https://events-enhanced.preview.emergentagent.com"
     api_url = f"{base_url}/api"
     
     # Test with the manual token we created
