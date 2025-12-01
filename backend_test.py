@@ -21,6 +21,10 @@ class EventAppAuthTester:
         self.attendee_id = None
         self.organizer_token = None
         self.organizer_id = None
+        # Email/password auth test users
+        self.email_admin_token = None
+        self.email_attendee_token = None
+        self.email_organizer_token = None
         self.tests_run = 0
         self.tests_passed = 0
         self.test_results = []
