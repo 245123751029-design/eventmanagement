@@ -40,6 +40,7 @@ class User(BaseModel):
     email: str
     name: str
     picture: Optional[str] = None
+    password_hash: Optional[str] = None  # Only for email/password auth
     role: str = "attendee"  # attendee, organizer, admin
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
