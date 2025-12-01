@@ -257,6 +257,43 @@ backend:
         agent: "testing"
         comment: "✅ TESTED: Admin bookings endpoint working correctly. Returns all bookings with detailed information. Non-admins correctly blocked with 403."
 
+  - task: "Email/password registration endpoint"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added POST /api/auth/register endpoint with email validation, password hashing (bcrypt), role selection, and automatic session creation"
+
+  - task: "Email/password login endpoint"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added POST /api/auth/login endpoint with credential validation, OAuth account detection, password verification (bcrypt), and session creation"
+
+  - task: "User model password support"
+    implemented: true
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added optional password_hash field to User model to support both OAuth and email/password authentication"
+
+
 frontend:
   - task: "Role selection modal for new users"
     implemented: true
