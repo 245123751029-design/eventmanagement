@@ -86,11 +86,11 @@ const Home = () => {
                 placeholder="Search events..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 rounded-full border-gray-300"
+                className="pl-10 h-12 rounded-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             </div>
             <Select value={selectedCategory || undefined} onValueChange={setSelectedCategory}>
-              <SelectTrigger data-testid="category-filter-select" className="h-12 rounded-full">
+              <SelectTrigger data-testid="category-filter-select" className="h-12 rounded-full dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
               <SelectContent>
