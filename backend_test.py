@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Event Management App Backend API Testing - Role System Focus
-Tests user role system, role-based access control, and admin endpoints
+Event Management App Backend API Testing - Authentication & Role System Focus
+Tests email/password authentication, OAuth compatibility, user role system, role-based access control, and admin endpoints
 """
 
 import requests
@@ -11,7 +11,7 @@ import time
 from datetime import datetime, timezone, timedelta
 from typing import Dict, Any, Optional
 
-class EventAppRoleTester:
+class EventAppAuthTester:
     def __init__(self, base_url="https://event-manager-plus.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
