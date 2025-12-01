@@ -87,11 +87,11 @@ const Navbar = () => {
                         <DropdownMenuSeparator />
                       </>
                     )}
-                    <DropdownMenuItem data-testid="my-events-menu-item" onClick={() => navigate('/my-events')} className="cursor-pointer">
+                    <DropdownMenuItem data-testid="my-events-menu-item" onClick={() => navigate('/my-events')} className="cursor-pointer text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700">
                       <Calendar className="w-4 h-4 mr-2" />
                       My Events
                     </DropdownMenuItem>
-                    <DropdownMenuItem data-testid="my-bookings-menu-item" onClick={() => navigate('/my-bookings')} className="cursor-pointer">
+                    <DropdownMenuItem data-testid="my-bookings-menu-item" onClick={() => navigate('/my-bookings')} className="cursor-pointer text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700">
                       <Ticket className="w-4 h-4 mr-2" />
                       My Bookings
                     </DropdownMenuItem>
