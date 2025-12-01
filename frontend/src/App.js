@@ -111,55 +111,57 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, checkAuth, selectRole }}>
-      <div className="App">
-        {/* Role Selection Modal */}
-        {showRoleSelection && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-              <h2 className="text-2xl font-bold mb-4">Choose Your Role</h2>
-              <p className="text-gray-600 mb-6">
-                Select how you'd like to use our platform. You can change this later.
-              </p>
-              <div className="space-y-3">
-                <button
-                  onClick={() => selectRole('attendee')}
-                  className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition text-left"
-                >
-                  <div className="font-semibold text-lg">🎫 Attendee</div>
-                  <div className="text-sm text-gray-600 mt-1">
-                    Browse and book tickets for events
-                  </div>
-                </button>
-                <button
-                  onClick={() => selectRole('organizer')}
-                  className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition text-left"
-                >
-                  <div className="font-semibold text-lg">🎪 Organizer</div>
-                  <div className="text-sm text-gray-600 mt-1">
-                    Create and manage events, plus book tickets
-                  </div>
-                </button>
+    <ThemeProvider>
+      <AuthContext.Provider value={{ user, login, logout, checkAuth, selectRole }}>
+        <div className="App bg-white dark:bg-gray-900 min-h-screen transition-colors duration-200">
+          {/* Role Selection Modal */}
+          {showRoleSelection && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4">
+                <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Choose Your Role</h2>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">
+                  Select how you'd like to use our platform. You can change this later.
+                </p>
+                <div className="space-y-3">
+                  <button
+                    onClick={() => selectRole('attendee')}
+                    className="w-full p-4 border-2 border-gray-200 dark:border-gray-600 rounded-lg hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition text-left"
+                  >
+                    <div className="font-semibold text-lg text-gray-900 dark:text-white">🎫 Attendee</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                      Browse and book tickets for events
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => selectRole('organizer')}
+                    className="w-full p-4 border-2 border-gray-200 dark:border-gray-600 rounded-lg hover:border-purple-500 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition text-left"
+                  >
+                    <div className="font-semibold text-lg text-gray-900 dark:text-white">🎪 Organizer</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                      Create and manage events, plus book tickets
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Navigate to="/events" />} />
-            <Route path="/events" element={<Home />} />
-            <Route path="/events/:id" element={<EventDetails />} />
-            <Route path="/create-event" element={user && (user.role === 'organizer' || user.role === 'admin') ? <CreateEvent /> : <Navigate to="/events" />} />
-            <Route path="/my-events" element={user ? <MyEvents /> : <Navigate to="/events" />} />
-            <Route path="/my-bookings" element={user ? <MyBookings /> : <Navigate to="/events" />} />
-            <Route path="/booking-success" element={user ? <BookingSuccess /> : <Navigate to="/events" />} />
-            <Route path="/admin" element={user && user.role === 'admin' ? <AdminDashboard /> : <Navigate to="/events" />} />
-          </Routes>
-        </BrowserRouter>
-        <Toaster position="top-right" richColors />
-      </div>
-    </AuthContext.Provider>
+          )}
+          <BrowserRouter>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={user ? <Navigate to="/events" /> : <Welcome />} />
+              <Route path="/events" element={<Home />} />
+              <Route path="/events/:id" element={<EventDetails />} />
+              <Route path="/create-event" element={user && (user.role === 'organizer' || user.role === 'admin') ? <CreateEvent /> : <Navigate to="/events" />} />
+              <Route path="/my-events" element={user ? <MyEvents /> : <Navigate to="/events" />} />
+              <Route path="/my-bookings" element={user ? <MyBookings /> : <Navigate to="/events" />} />
+              <Route path="/booking-success" element={user ? <BookingSuccess /> : <Navigate to="/events" />} />
+              <Route path="/admin" element={user && user.role === 'admin' ? <AdminDashboard /> : <Navigate to="/events" />} />
+            </Routes>
+          </BrowserRouter>
+          <Toaster position="top-right" richColors />
+        </div>
+      </AuthContext.Provider>
+    </ThemeProvider>
   );
 }
 
