@@ -110,9 +110,9 @@ const Home = () => {
           </div>
         ) : events.length === 0 ? (
           <div className="text-center py-20">
-            <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">No events found</h3>
-            <p className="text-gray-500">Try adjusting your filters or search query</p>
+            <Calendar className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">No events found</h3>
+            <p className="text-gray-500 dark:text-gray-400">Try adjusting your filters or search query</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -120,7 +120,7 @@ const Home = () => {
               <div
                 key={event.id}
                 data-testid={`event-card-${event.id}`}
-                className="event-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl cursor-pointer border border-gray-100"
+                className="event-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl cursor-pointer border border-gray-100 dark:border-gray-700 transition-all duration-300"
                 onClick={() => navigate(`/events/${event.id}`)}
               >
                 <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-500 relative overflow-hidden">
