@@ -8,6 +8,8 @@ import { ThemeProvider } from '@/contexts/ThemeContext';
 
 import Navbar from '@/components/Navbar';
 import Welcome from '@/pages/Welcome';
+import Login from '@/pages/Login';
+import Signup from '@/pages/Signup';
 import Home from '@/pages/Home';
 import EventDetails from '@/pages/EventDetails';
 import CreateEvent from '@/pages/CreateEvent';
