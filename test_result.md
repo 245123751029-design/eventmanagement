@@ -105,12 +105,21 @@
 user_problem_statement: |
   Continue event management project from GitHub repository with the following requirements:
   - User login and signup ✅
-  - User roles: Admin, Organizer, Attendee
+  - User roles: Admin, Organizer, Attendee ✅
   - Create, update, delete events ✅
   - Show list of events to users ✅
   - Book tickets for events ✅
   - Show "My Bookings" page ✅
   - Optional: Online payment integration ✅ (Stripe)
+  
+  NEW REQUIREMENTS (Current Session):
+  1. Welcome page with description and background image ✅ (Already done)
+  2. Login/signup page with email/password (keep OAuth) ✅
+  3. Home page with suitable pictures and gradient background ✅
+  4. Light and dark mode ✅ (Already done)
+  5. Change currency from dollars to rupees ✅
+  6. Enable event manager to edit events ✅ (Already done via EditEvent.jsx)
+  7. Keep OpenStreetMap for location/venue ✅ (Already done)
 
 backend:
   - task: "User role system (attendee, organizer, admin)"
