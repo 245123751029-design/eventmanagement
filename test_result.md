@@ -437,12 +437,15 @@ metadata:
 
 test_plan:
   current_focus:
-    - "User role system (attendee, organizer, admin)"
-    - "Role selection for new users"
-    - "Admin dashboard functionality"
-    - "Role-based access control for event creation"
+    - "Email/password registration endpoint"
+    - "Email/password login endpoint"
+    - "User model password support"
+    - "Login page with email/password"
+    - "Signup page with registration"
+    - "Enhanced Home page with images and gradient"
+    - "Currency fix - AdminDashboard"
   stuck_tasks: []
-  test_all: true
+  test_all: false
   test_priority: "high_first"
 
 agent_communication:
