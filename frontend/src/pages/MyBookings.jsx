@@ -96,31 +96,31 @@ const MyBookings = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20 py-8">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8">My Bookings</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-8">My Bookings</h1>
 
         {bookings.length === 0 ? (
-          <Card className="p-12 text-center">
-            <Ticket className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">No bookings yet</h3>
-            <p className="text-gray-500">Your event bookings will appear here</p>
+          <Card className="p-12 text-center dark:bg-gray-800 dark:border-gray-700">
+            <Ticket className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">No bookings yet</h3>
+            <p className="text-gray-500 dark:text-gray-400">Your event bookings will appear here</p>
           </Card>
         ) : (
           <div className="space-y-4">
             {bookings.map((booking) => (
-              <Card key={booking.id} data-testid={`booking-card-${booking.id}`} className="overflow-hidden hover:shadow-lg">
+              <Card key={booking.id} data-testid={`booking-card-${booking.id}`} className="overflow-hidden hover:shadow-lg dark:bg-gray-800 dark:border-gray-700">
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                     <div className="flex-1 mb-4 md:mb-0">
                       <div className="flex items-center space-x-3 mb-2">
-                        <h3 className="text-xl font-bold text-gray-900">{booking.event_title}</h3>
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">{booking.event_title}</h3>
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center space-x-1 ${getStatusColor(booking.status)}`}>
                           {getStatusIcon(booking.status)}
                           <span className="capitalize">{booking.status}</span>
                         </span>
                       </div>
-                      <div className="space-y-1 text-sm text-gray-600">
+                      <div className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
                         <div className="flex items-center space-x-2">
                           <Calendar className="w-4 h-4 text-blue-600" />
                           <span>{formatDate(booking.event_date)}</span>
