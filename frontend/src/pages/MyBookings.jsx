@@ -135,8 +135,8 @@ const MyBookings = () => {
                         </div>
                       </div>
                       <div className="mt-3">
-                        <span className="text-lg font-bold text-gray-900">
-                          Total: ${booking.total_price.toFixed(2)}
+                        <span className="text-lg font-bold text-gray-900 dark:text-white">
+                          Total: ₹{booking.total_price.toFixed(2)}
                         </span>
                       </div>
                     </div>
