@@ -68,6 +68,8 @@ class Event(BaseModel):
     capacity: int
     category: str
     image_url: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
     status: str = "active"  # active, cancelled
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -127,6 +129,8 @@ class EventCreate(BaseModel):
     capacity: int
     category: str
     image_url: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
 class EventUpdate(BaseModel):
     title: Optional[str] = None
@@ -136,6 +140,8 @@ class EventUpdate(BaseModel):
     capacity: Optional[int] = None
     category: Optional[str] = None
     image_url: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
     status: Optional[str] = None
 
 class TicketTypeCreate(BaseModel):

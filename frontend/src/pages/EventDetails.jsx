@@ -110,10 +110,10 @@ const EventDetails = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
+    return date.toLocaleDateString('en-US', {
       weekday: 'long',
-      month: 'long', 
-      day: 'numeric', 
+      month: 'long',
+      day: 'numeric',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
@@ -140,7 +140,7 @@ const EventDetails = () => {
   const canEditEvent = user && (user.role === 'admin' || event.creator_id === user.id);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-purple-950 dark:to-blue-950 py-8">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-6">
           <Button
@@ -152,7 +152,7 @@ const EventDetails = () => {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Events
           </Button>
-          
+
           {canEditEvent && (
             <Button
               onClick={() => navigate(`/edit-event/${event.id}`)}
@@ -169,8 +169,20 @@ const EventDetails = () => {
             {event.image_url ? (
               <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                <Calendar className="w-24 h-24 text-white opacity-50" />
+              <div
+                className="w-full h-full bg-cover bg-center"
+                style={{
+                  backgroundImage: `url(${event.category === 'Concert' ? 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3' :
+                    event.category === 'Workshop' ? 'https://images.unsplash.com/photo-1761959172946-d5a39aed82cb' :
+                      event.category === 'Conference' ? 'https://images.pexels.com/photos/34991748/pexels-photo-34991748.jpeg' :
+                        event.category === 'Festival' ? 'https://images.unsplash.com/photo-1531686264889-56fdcabd163f' :
+                          'https://images.unsplash.com/photo-1459749411175-04bf5292ceea'
+                    }?crop=entropy&cs=srgb&fm=jpg&q=85)`
+                }}
+              >
+                <div className="w-full h-full bg-gradient-to-br from-blue-600/40 to-purple-600/40 flex items-center justify-center">
+                  <Calendar className="w-24 h-24 text-white opacity-70" />
+                </div>
               </div>
             )}
             <div className="absolute top-6 right-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-4 py-2 rounded-full font-semibold text-gray-700 dark:text-gray-200">
@@ -180,7 +192,7 @@ const EventDetails = () => {
 
           <div className="p-8">
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">{event.title}</h1>
-            
+
             <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 mb-6">
               <User className="w-5 h-5" />
               <span>Organized by <span className="font-semibold">{event.creator_name}</span></span>
@@ -218,7 +230,7 @@ const EventDetails = () => {
             {/* Location Map */}
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Location</h2>
-              <LocationMap location={event.location} className="shadow-lg" />
+              <LocationMap location={event.location} latitude={event.latitude} longitude={event.longitude} className="shadow-lg" />
             </div>
 
             {ticketTypes.length > 0 && (

@@ -11,16 +11,22 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
 });
 
-const LocationMap = ({ location, className = '' }) => {
+const LocationMap = ({ location, latitude, longitude, className = '' }) => {
   // Default coordinates (center of India for now)
-  const [position] = React.useState([20.5937, 78.9629]);
+  const [position, setPosition] = React.useState([20.5937, 78.9629]);
+
+  React.useEffect(() => {
+    if (latitude && longitude) {
+      setPosition([latitude, longitude]);
+    }
+  }, [latitude, longitude]);
 
   return (
-    <div className={`rounded-lg overflow-hidden ${className}`}>
-      <MapContainer 
-        center={position} 
-        zoom={5} 
-        style={{ height: '300px', width: '100%' }}
+    <div className={`rounded-lg overflow-hidden relative z-0 ${className}`}>
+      <MapContainer
+        center={position}
+        zoom={5}
+        style={{ height: '300px', width: '100%', zIndex: 0 }}
         scrollWheelZoom={false}
       >
         <TileLayer

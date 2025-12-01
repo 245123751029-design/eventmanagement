@@ -42,7 +42,7 @@ const Home = () => {
       const params = {};
       if (selectedCategory && selectedCategory !== 'all') params.category = selectedCategory;
       if (searchQuery) params.search = searchQuery;
-      
+
       const response = await axios.get(`${API}/events`, { params });
       setEvents(response.data);
     } catch (error) {
@@ -55,9 +55,9 @@ const Home = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric', 
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
@@ -65,9 +65,9 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-purple-950 dark:to-blue-950">
       {/* Hero Section with Background Image */}
-      <div 
+      <div
         className="relative py-20 overflow-hidden"
         style={{
           backgroundImage: 'url(https://images.unsplash.com/photo-1459749411175-04bf5292ceea?crop=entropy&cs=srgb&fm=jpg&q=85)',
@@ -77,7 +77,7 @@ const Home = () => {
       >
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 via-purple-600/85 to-pink-600/90 dark:from-blue-900/95 dark:via-purple-900/90 dark:to-pink-900/95"></div>
-        
+
         {/* Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-white text-center lg:text-left">
@@ -86,34 +86,6 @@ const Home = () => {
           <p className="text-lg sm:text-xl text-blue-100 dark:text-blue-200 max-w-2xl text-center lg:text-left">
             Find and book tickets for concerts, workshops, conferences, and more
           </p>
-          
-          {/* Category Quick Links */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 max-w-4xl">
-            <div className="group cursor-pointer">
-              <div className="bg-white/20 dark:bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/30 hover:bg-white/30 transition-all duration-300 h-full">
-                <div className="text-3xl mb-2 text-center">🎵</div>
-                <div className="text-white font-semibold text-center text-sm">Concerts</div>
-              </div>
-            </div>
-            <div className="group cursor-pointer">
-              <div className="bg-white/20 dark:bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/30 hover:bg-white/30 transition-all duration-300 h-full">
-                <div className="text-3xl mb-2 text-center">🎓</div>
-                <div className="text-white font-semibold text-center text-sm">Workshops</div>
-              </div>
-            </div>
-            <div className="group cursor-pointer">
-              <div className="bg-white/20 dark:bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/30 hover:bg-white/30 transition-all duration-300 h-full">
-                <div className="text-3xl mb-2 text-center">💼</div>
-                <div className="text-white font-semibold text-center text-sm">Conferences</div>
-              </div>
-            </div>
-            <div className="group cursor-pointer">
-              <div className="bg-white/20 dark:bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/30 hover:bg-white/30 transition-all duration-300 h-full">
-                <div className="text-3xl mb-2 text-center">⚽</div>
-                <div className="text-white font-semibold text-center text-sm">Sports</div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -136,10 +108,10 @@ const Home = () => {
               <SelectTrigger data-testid="category-filter-select" className="h-12 rounded-full dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
+              <SelectContent className="dark:bg-gray-700 dark:border-gray-600">
+                <SelectItem value="all" className="dark:text-white">All Categories</SelectItem>
                 {categories.map((cat) => (
-                  <SelectItem key={cat.id} value={cat.name}>{cat.name}</SelectItem>
+                  <SelectItem key={cat.id} value={cat.name} className="dark:text-white">{cat.name}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -170,16 +142,15 @@ const Home = () => {
                   {event.image_url ? (
                     <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
                   ) : (
-                    <div 
+                    <div
                       className="w-full h-full bg-cover bg-center"
                       style={{
-                        backgroundImage: `url(${
-                          event.category === 'Concert' ? 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3' :
+                        backgroundImage: `url(${event.category === 'Concert' ? 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3' :
                           event.category === 'Workshop' ? 'https://images.unsplash.com/photo-1761959172946-d5a39aed82cb' :
-                          event.category === 'Conference' ? 'https://images.pexels.com/photos/34991748/pexels-photo-34991748.jpeg' :
-                          event.category === 'Festival' ? 'https://images.unsplash.com/photo-1531686264889-56fdcabd163f' :
-                          'https://images.unsplash.com/photo-1459749411175-04bf5292ceea'
-                        }?crop=entropy&cs=srgb&fm=jpg&q=85)`
+                            event.category === 'Conference' ? 'https://images.pexels.com/photos/34991748/pexels-photo-34991748.jpeg' :
+                              event.category === 'Festival' ? 'https://images.unsplash.com/photo-1531686264889-56fdcabd163f' :
+                                'https://images.unsplash.com/photo-1459749411175-04bf5292ceea'
+                          }?crop=entropy&cs=srgb&fm=jpg&q=85)`
                       }}
                     >
                       <div className="w-full h-full bg-gradient-to-br from-blue-600/40 to-purple-600/40 flex items-center justify-center">

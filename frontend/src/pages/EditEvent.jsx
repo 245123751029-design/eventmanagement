@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { ArrowLeft, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import LocationPicker from '@/components/LocationPicker';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -28,7 +29,9 @@ const EditEvent = () => {
     location: '',
     capacity: '',
     category: '',
-    image_url: ''
+    image_url: '',
+    latitude: null,
+    longitude: null
   });
 
   useEffect(() => {
@@ -49,7 +52,7 @@ const EditEvent = () => {
     try {
       const response = await axios.get(`${API}/events/${id}`);
       const event = response.data;
-      
+
       // Check if user can edit
       if (user.role !== 'admin' && event.creator_id !== user.id) {
         toast.error('You do not have permission to edit this event');
@@ -64,7 +67,10 @@ const EditEvent = () => {
         location: event.location,
         capacity: event.capacity.toString(),
         category: event.category,
-        image_url: event.image_url || ''
+        category: event.category,
+        image_url: event.image_url || '',
+        latitude: event.latitude,
+        longitude: event.longitude
       });
     } catch (error) {
       console.error('Error fetching event:', error);
@@ -83,9 +89,31 @@ const EditEvent = () => {
     setFormData({ ...formData, category: value });
   };
 
+  const handleLocationSelect = async (latlng) => {
+    setFormData(prev => ({
+      ...prev,
+      latitude: latlng.lat,
+      longitude: latlng.lng
+    }));
+
+    // Reverse geocoding to get address
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latlng.lat}&lon=${latlng.lng}`);
+      const data = await response.json();
+      if (data.display_name) {
+        setFormData(prev => ({
+          ...prev,
+          location: data.display_name
+        }));
+      }
+    } catch (error) {
+      console.error("Error reverse geocoding:", error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.title || !formData.description || !formData.date || !formData.location || !formData.capacity || !formData.category) {
       toast.error('Please fill in all required fields');
       return;
@@ -93,7 +121,7 @@ const EditEvent = () => {
 
     try {
       setLoading(true);
-      
+
       await axios.put(
         `${API}/events/${id}`,
         {
@@ -139,7 +167,7 @@ const EditEvent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-purple-950 dark:to-blue-950 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Button
           onClick={() => navigate(`/events/${id}`)}
@@ -198,6 +226,20 @@ const EditEvent = () => {
                       required
                       className="dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     />
+                  </div>
+
+                  <div className="col-span-1 md:col-span-2">
+                    <Label>Select Location on Map</Label>
+                    <div className="mt-2">
+                      <LocationPicker
+                        onLocationSelect={handleLocationSelect}
+                        initialPosition={
+                          formData.latitude && formData.longitude
+                            ? { lat: formData.latitude, lng: formData.longitude }
+                            : null
+                        }
+                      />
+                    </div>
                   </div>
 
                   <div>

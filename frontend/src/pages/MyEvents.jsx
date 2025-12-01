@@ -60,9 +60,9 @@ const MyEvents = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric', 
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
@@ -78,10 +78,10 @@ const MyEvents = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-purple-950 dark:to-blue-950 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">My Events</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">My Events</h1>
           <Button
             data-testid="create-event-btn"
             onClick={() => navigate('/create-event')}
@@ -93,10 +93,10 @@ const MyEvents = () => {
         </div>
 
         {events.length === 0 ? (
-          <Card className="p-12 text-center">
-            <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">No events yet</h3>
-            <p className="text-gray-500 mb-6">Create your first event to get started</p>
+          <Card className="p-12 text-center dark:bg-gray-800 dark:border-gray-700">
+            <Calendar className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-300 mb-2">No events yet</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6">Create your first event to get started</p>
             <Button
               onClick={() => navigate('/create-event')}
               className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
@@ -108,7 +108,7 @@ const MyEvents = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event) => (
-              <Card key={event.id} data-testid={`my-event-card-${event.id}`} className="overflow-hidden hover:shadow-xl">
+              <Card key={event.id} data-testid={`my-event-card-${event.id}`} className="overflow-hidden hover:shadow-xl dark:bg-gray-800 dark:border-gray-700">
                 <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-500 relative">
                   {event.image_url ? (
                     <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
@@ -117,13 +117,13 @@ const MyEvents = () => {
                       <Calendar className="w-16 h-16 text-white opacity-50" />
                     </div>
                   )}
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">
+                  <div className="absolute top-3 right-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-200">
                     {event.status}
                   </div>
                 </div>
                 <CardContent className="p-5">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">{event.title}</h3>
-                  <div className="space-y-2 text-sm text-gray-600 mb-4">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">{event.title}</h3>
+                  <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
                     <div className="flex items-center space-x-2">
                       <Calendar className="w-4 h-4 text-blue-600" />
                       <span>{formatDate(event.date)}</span>
@@ -163,10 +163,10 @@ const MyEvents = () => {
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={!!deleteEventId} onOpenChange={() => setDeleteEventId(null)}>
-        <AlertDialogContent>
+        <AlertDialogContent className="dark:bg-gray-800 dark:border-gray-700">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Event</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="dark:text-white">Delete Event</AlertDialogTitle>
+            <AlertDialogDescription className="dark:text-gray-300">
               Are you sure you want to delete this event? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>

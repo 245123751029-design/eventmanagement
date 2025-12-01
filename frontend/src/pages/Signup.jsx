@@ -40,7 +40,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.email || !formData.password || !formData.name) {
       toast.error('Please fill in all fields');
       return;
@@ -56,7 +56,7 @@ const Signup = () => {
       const response = await axios.post(`${API}/auth/register`, formData, {
         withCredentials: true
       });
-      
+
       if (response.data.success) {
         setUser(response.data.user);
         toast.success('Account created successfully!');
@@ -71,7 +71,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-purple-950 dark:to-blue-950 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-2xl dark:bg-gray-800 dark:border-gray-700">
         <CardHeader className="space-y-4 text-center">
           <div className="flex justify-center">
@@ -86,7 +86,7 @@ const Signup = () => {
             Create your account to start exploring events
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
@@ -205,8 +205,8 @@ const Signup = () => {
 
           <div className="text-center text-sm text-gray-600 dark:text-gray-400">
             Already have an account?{' '}
-            <Link 
-              to="/login" 
+            <Link
+              to="/login"
               className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
             >
               Sign in
