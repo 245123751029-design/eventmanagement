@@ -63,10 +63,10 @@ const Navbar = () => {
                       </Avatar>
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuContent align="end" className="w-56 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                     <div className="px-2 py-2">
-                      <p className="text-sm font-semibold">{user.name}</p>
-                      <p className="text-xs text-gray-500">{user.email}</p>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">{user.name}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
                       <div className="mt-1">
                         <span className={`text-xs px-2 py-0.5 rounded-full ${
                           user.role === 'admin' ? 'bg-red-100 text-red-700' :
