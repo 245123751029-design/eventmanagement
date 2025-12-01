@@ -275,7 +275,7 @@ const CreateEvent = () => {
                             />
                           </div>
                           <div>
-                            <Label>Price ($) *</Label>
+                            <Label>Price (₹) *</Label>
                             <Input
                               data-testid={`ticket-price-input-${index}`}
                               type="number"
