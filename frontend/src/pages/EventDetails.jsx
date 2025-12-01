@@ -173,46 +173,52 @@ const EventDetails = () => {
                 <Calendar className="w-24 h-24 text-white opacity-50" />
               </div>
             )}
-            <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full font-semibold text-gray-700">
+            <div className="absolute top-6 right-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-4 py-2 rounded-full font-semibold text-gray-700 dark:text-gray-200">
               {event.category}
             </div>
           </div>
 
           <div className="p-8">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">{event.title}</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">{event.title}</h1>
             
-            <div className="flex items-center space-x-2 text-gray-600 mb-6">
+            <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 mb-6">
               <User className="w-5 h-5" />
               <span>Organized by <span className="font-semibold">{event.creator_name}</span></span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="flex items-start space-x-3 p-4 bg-blue-50 rounded-xl">
-                <Calendar className="w-6 h-6 text-blue-600 mt-1" />
+              <div className="flex items-start space-x-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                <Calendar className="w-6 h-6 text-blue-600 dark:text-blue-400 mt-1" />
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Date & Time</p>
-                  <p className="font-semibold text-gray-900">{formatDate(event.date)}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Date & Time</p>
+                  <p className="font-semibold text-gray-900 dark:text-white">{formatDate(event.date)}</p>
                 </div>
               </div>
-              <div className="flex items-start space-x-3 p-4 bg-purple-50 rounded-xl">
-                <MapPin className="w-6 h-6 text-purple-600 mt-1" />
+              <div className="flex items-start space-x-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                <MapPin className="w-6 h-6 text-purple-600 dark:text-purple-400 mt-1" />
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Location</p>
-                  <p className="font-semibold text-gray-900">{event.location}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Location</p>
+                  <p className="font-semibold text-gray-900 dark:text-white">{event.location}</p>
                 </div>
               </div>
-              <div className="flex items-start space-x-3 p-4 bg-green-50 rounded-xl">
-                <Users className="w-6 h-6 text-green-600 mt-1" />
+              <div className="flex items-start space-x-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-xl">
+                <Users className="w-6 h-6 text-green-600 dark:text-green-400 mt-1" />
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Capacity</p>
-                  <p className="font-semibold text-gray-900">{event.capacity} attendees</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Capacity</p>
+                  <p className="font-semibold text-gray-900 dark:text-white">{event.capacity} attendees</p>
                 </div>
               </div>
             </div>
 
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">About This Event</h2>
-              <p className="text-base text-gray-700 leading-relaxed">{event.description}</p>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">About This Event</h2>
+              <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">{event.description}</p>
+            </div>
+
+            {/* Location Map */}
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Location</h2>
+              <LocationMap location={event.location} className="shadow-lg" />
             </div>
 
             {ticketTypes.length > 0 && (
